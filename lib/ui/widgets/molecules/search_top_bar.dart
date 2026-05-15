@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import '../../../common/l10n/app_localizations.dart';
 import '../../../common/utils/debouncer.dart';
@@ -67,11 +66,19 @@ class _SearchTopBarState extends State<SearchTopBar> {
                   widget.onChanged?.call(value);
                 });
               },
-              style: const TextStyle(color: Colors.black), // Text always black on white field
+              style: const TextStyle(
+                color: Colors.black,
+              ), // Text always black on white field
               decoration: InputDecoration(
                 hintText: widget.hintText ?? l10n.searchHint,
-                hintStyle: TextStyle(color: Colors.black.withValues(alpha: 0.5)),
-                prefixIcon: const Icon(Icons.search, size: 20, color: Colors.black),
+                hintStyle: TextStyle(
+                  color: Colors.black.withValues(alpha: 0.5),
+                ),
+                prefixIcon: const Icon(
+                  Icons.search,
+                  size: 20,
+                  color: Colors.black,
+                ),
                 isDense: true,
                 contentPadding: const EdgeInsets.symmetric(vertical: 10.0),
                 border: OutlineInputBorder(
