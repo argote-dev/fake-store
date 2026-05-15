@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/repositories/shopping_cart_repository.dart';
 import '../../domain/use_cases/add_product_to_cart_use_case.dart';
+import '../../domain/use_cases/clear_cart_use_case.dart';
 import '../../domain/use_cases/get_cart_use_case.dart';
 import '../../domain/use_cases/remove_cart_item_use_case.dart';
 import '../../domain/use_cases/update_cart_item_quantity_use_case.dart';
@@ -34,4 +35,9 @@ final updateCartItemQuantityUseCaseProvider = Provider<UpdateCartItemQuantityUse
 final removeCartItemUseCaseProvider = Provider<RemoveCartItemUseCase>((ref) {
   final repository = ref.watch(shoppingCartRepositoryProvider);
   return RemoveCartItemUseCase(repository);
+});
+
+final clearCartUseCaseProvider = Provider<ClearCartUseCase>((ref) {
+  final repository = ref.watch(shoppingCartRepositoryProvider);
+  return ClearCartUseCase(repository);
 });

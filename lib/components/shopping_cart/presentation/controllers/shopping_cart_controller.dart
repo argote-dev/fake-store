@@ -66,6 +66,11 @@ class ShoppingCartController extends Notifier<List<CartItem>> {
     await ref.read(removeCartItemUseCaseProvider).execute(productId, isExpress);
     state = state.where((item) => item.productId != productId).toList();
   }
+
+  Future<void> clearCart() async {
+    await ref.read(clearCartUseCaseProvider).execute(isExpress);
+    state = [];
+  }
 }
 
 final shoppingCartProvider =

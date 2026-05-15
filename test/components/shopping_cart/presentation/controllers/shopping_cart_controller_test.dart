@@ -112,6 +112,32 @@ void main() {
       expect(state.isEmpty, true);
       verify(mockRepository.deleteCartItem(tProduct.productId, false)).called(1);
     });
+
+    test('should clear the cart', () async {
+      // Given
+      final existingItem = CartItem(
+        productId: tProduct.productId,
+        name: tProduct.name,
+        image: tProduct.image,
+        price: tProduct.price,
+        unit: tProduct.unit,
+        quantity: 2,
+        isExpress: false,
+      );
+      when(mockRepository.getCartItems(false)).thenAnswer((_) async => [existingItem]);
+      when(mockRepository.clearCart(false)).thenAnswer((_) async => {});
+      
+      final controller = container.read(shoppingCartProvider(false).notifier);
+      await Future.delayed(Duration.zero); // Let build finish
+
+      // When
+      await controller.clearCart();
+
+      // Then
+      final state = container.read(shoppingCartProvider(false));
+      expect(state.isEmpty, true);
+      verify(mockRepository.clearCart(false)).called(1);
+    });
   });
 
   group('ShoppingCartController - Express Mode', () {

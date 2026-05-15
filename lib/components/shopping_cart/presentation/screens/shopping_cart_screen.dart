@@ -118,7 +118,54 @@ class ShoppingCartScreen extends ConsumerWidget {
                         width: double.infinity,
                         child: ElevatedButton(
                           onPressed: () {
-                            // Implement checkout
+                            showDialog(
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (BuildContext dialogContext) {
+                                return StatefulBuilder(
+                                  builder: (context, setState) {
+                                    bool isProcessing = true;
+
+                                    Future.delayed(const Duration(seconds: 2),
+                                        () {
+                                      if (context.mounted && isProcessing) {
+                                        setState(() {
+                                          isProcessing = false;
+                                        });
+
+                                        Future.delayed(
+                                            const Duration(milliseconds: 1000),
+                                            () {
+                                          if (context.mounted) {
+                                            Navigator.of(dialogContext).pop();
+                                            controller.clearCart();
+                                            context.go('/');
+                                          }
+                                        });
+                                      }
+                                    });
+
+                                    return AlertDialog(
+                                      content: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          if (isProcessing) ...[
+                                            const CircularProgressIndicator(),
+                                            const SizedBox(height: 16),
+                                            const Text('Procesando pago...'),
+                                          ] else ...[
+                                            const Icon(Icons.check_circle,
+                                                color: Colors.green, size: 48),
+                                            const SizedBox(height: 16),
+                                            const Text('Pago realizado'),
+                                          ],
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                            );
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: themeColor,
