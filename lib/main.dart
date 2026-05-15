@@ -6,27 +6,25 @@ import 'package:fake_store/common/l10n/app_localizations.dart';
 
 Future<void> main() async {
   await dotenv.load(fileName: '.env');
-  runApp(
-    const ProviderScope(
-      child: MainApp(),
-    ),
-  );
+  runApp(const ProviderScope(child: MainApp()));
 }
 
-class MainApp extends StatelessWidget {
+class MainApp extends ConsumerWidget {
   const MainApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final themeState = ref.watch(appThemeProvider);
+
     return MaterialApp.router(
       routerConfig: appRouter,
-      theme: AppTheme().getTheme(),
+      theme: AppTheme(
+        mode: themeState.mode,
+        brightness: themeState.brightness,
+      ).getTheme(),
       debugShowCheckedModeBanner: false,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: const [
-        Locale('en'),
-        Locale('es', '419'),
-      ],
+      supportedLocales: const [Locale('en'), Locale('es', '419')],
     );
   }
 }

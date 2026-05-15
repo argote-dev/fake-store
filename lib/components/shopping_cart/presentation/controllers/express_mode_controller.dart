@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../../common/utils/app_config.dart';
+import '../../../../common/config/app_config.dart';
 
 class ExpressModeController extends Notifier<bool> {
   @override

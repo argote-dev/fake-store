@@ -1,21 +1,35 @@
 import 'package:flutter/material.dart';
 
+enum AppThemeMode { normal, express }
+
 class AppTheme {
-  static const Color primaryColor = Color(0xFFFFe800);
+  // Colors Modo Normal
+  static const Color primaryColorNormal = Color(0xFFFFe800);
+
+  // Colors Mode Express
+  static const Color primaryColorExpress = Color(0xFF2596be);
+
   static const Color secondaryColor = Color(0xFF000000);
   static const Color whiteColor = Color(0xFFFFFFFF);
   static const Color blackColor = Color(0xFF000000);
 
   final Brightness brightness;
+  final AppThemeMode mode;
 
-  AppTheme({this.brightness = Brightness.light});
+  AppTheme({
+    this.brightness = Brightness.light,
+    this.mode = AppThemeMode.normal,
+  });
+
+  Color get _primaryColor =>
+      mode == AppThemeMode.normal ? primaryColorNormal : primaryColorExpress;
 
   ThemeData getTheme() {
     final colorScheme = ColorScheme.fromSeed(
-      seedColor: primaryColor,
+      seedColor: _primaryColor,
       brightness: brightness,
-      primary: primaryColor,
-      onPrimary: Colors.black,
+      primary: _primaryColor,
+      onPrimary: mode == AppThemeMode.normal ? Colors.black : Colors.white,
       secondary: secondaryColor,
       onSecondary: whiteColor,
       surface: brightness == Brightness.light
@@ -23,6 +37,7 @@ class AppTheme {
           : const Color(0xFF121212),
       onSurface: brightness == Brightness.light ? blackColor : whiteColor,
     );
+
     return ThemeData(
       useMaterial3: true,
       colorScheme: colorScheme,
@@ -30,9 +45,13 @@ class AppTheme {
       visualDensity: VisualDensity.adaptivePlatformDensity,
       iconTheme: IconThemeData(color: colorScheme.onSurface),
       appBarTheme: AppBarTheme(
-        backgroundColor: primaryColor,
-        foregroundColor: Colors.black,
-        iconTheme: const IconThemeData(color: Colors.black),
+        backgroundColor: _primaryColor,
+        foregroundColor: mode == AppThemeMode.normal
+            ? Colors.black
+            : Colors.white,
+        iconTheme: IconThemeData(
+          color: mode == AppThemeMode.normal ? Colors.black : Colors.white,
+        ),
       ),
       cardTheme: CardThemeData(
         color: brightness == Brightness.light

@@ -14,14 +14,10 @@ class HomeScreen extends ConsumerWidget {
     final isExpressMode = ref.watch(expressModeProvider);
     final controller = ref.read(expressModeProvider.notifier);
 
-    final themeColor = isExpressMode
-        ? const Color(0xFF2596be)
-        : const Color(0xFFFFe800);
-
     return Scaffold(
       body: Column(
         children: [
-          SearchTopBar(backgroundColor: themeColor),
+          const SearchTopBar(),
           if (controller.shouldShowSwitcher)
             Padding(
               padding: const EdgeInsets.symmetric(
@@ -38,8 +34,6 @@ class HomeScreen extends ConsumerWidget {
                   Switch(
                     value: isExpressMode,
                     onChanged: (value) => controller.toggle(value),
-                    activeThumbColor: const Color(0xFF2596be),
-                    activeTrackColor: const Color(0xFF2596be).withAlpha(128),
                   ),
                 ],
               ),
