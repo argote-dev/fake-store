@@ -18,12 +18,18 @@ class ProductCard extends ConsumerWidget {
     final theme = Theme.of(context);
     final isExpressMode = ref.watch(expressModeProvider);
     final cartItems = ref.watch(shoppingCartProvider(isExpressMode));
-    final cartController = ref.read(shoppingCartProvider(isExpressMode).notifier);
+    final cartController = ref.read(
+      shoppingCartProvider(isExpressMode).notifier,
+    );
 
-    final cartItem = cartItems.where((item) => item.productId == product.productId).firstOrNull;
+    final cartItem = cartItems
+        .where((item) => item.productId == product.productId)
+        .firstOrNull;
     final isInCart = cartItem != null;
 
-    final themeColor = isExpressMode ? const Color(0xFF2596be) : const Color(0xFFFFe800);
+    final themeColor = isExpressMode
+        ? const Color(0xFF2596be)
+        : const Color(0xFFFFe800);
     final foregroundColor = isExpressMode ? Colors.white : Colors.black;
 
     return Card(
@@ -92,8 +98,14 @@ class ProductCard extends ConsumerWidget {
                   else
                     _buildQuantityControl(
                       quantity: cartItem.quantity,
-                      onIncrement: () => cartController.updateQuantity(product.productId, cartItem.quantity + 1),
-                      onDecrement: () => cartController.updateQuantity(product.productId, cartItem.quantity - 1),
+                      onIncrement: () => cartController.updateQuantity(
+                        product.productId,
+                        cartItem.quantity + 1,
+                      ),
+                      onDecrement: () => cartController.updateQuantity(
+                        product.productId,
+                        cartItem.quantity - 1,
+                      ),
                       l10n: l10n,
                       isExpress: false,
                     ),
@@ -114,7 +126,10 @@ class ProductCard extends ConsumerWidget {
                     onIncrement: () => cartController.addProduct(product),
                     onDecrement: () {
                       if (isInCart) {
-                        cartController.updateQuantity(product.productId, cartItem.quantity - 1);
+                        cartController.updateQuantity(
+                          product.productId,
+                          cartItem.quantity - 1,
+                        );
                       }
                     },
                     isExpress: true,
@@ -144,9 +159,7 @@ class ProductCard extends ConsumerWidget {
         style: ElevatedButton.styleFrom(
           backgroundColor: color,
           foregroundColor: textColor,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           padding: const EdgeInsets.symmetric(horizontal: 8),
         ),
         child: Row(
@@ -154,10 +167,7 @@ class ProductCard extends ConsumerWidget {
           children: [
             Text(
               label,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 12,
-              ),
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
             ),
             if (suffixIcon != null) ...[
               const SizedBox(width: 8),
@@ -176,7 +186,9 @@ class ProductCard extends ConsumerWidget {
     required AppLocalizations l10n,
     bool isExpress = false,
   }) {
-    final minusIcon = isExpress ? Icons.delete_outline : Icons.remove;
+    final minusIcon = isExpress
+        ? Icons.delete_outline
+        : Icons.remove_circle_outline;
     final minusColor = isExpress ? Colors.black : Colors.orange;
     final plusColor = isExpress ? const Color(0xFF2596be) : Colors.orange;
     final textColor = Colors.black;
@@ -206,7 +218,7 @@ class ProductCard extends ConsumerWidget {
           ),
           IconButton(
             onPressed: onIncrement,
-            icon: Icon(Icons.add, size: 18, color: plusColor),
+            icon: Icon(Icons.add_circle_outline, size: 18, color: plusColor),
             padding: EdgeInsets.zero,
             constraints: const BoxConstraints(),
           ),
