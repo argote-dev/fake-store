@@ -1,4 +1,4 @@
-import '../repositories/shopping_cart_repository.dart';
+import '../../repositories/shopping_cart_repository.dart';
 
 class ClearCartUseCase {
   final ShoppingCartRepository repository;

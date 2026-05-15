@@ -1,5 +1,5 @@
-import '../models/cart_item.dart';
-import '../repositories/shopping_cart_repository.dart';
+import '../../models/cart_item.dart';
+import '../../repositories/shopping_cart_repository.dart';
 
 class GetCartUseCase {
   final ShoppingCartRepository _repository;

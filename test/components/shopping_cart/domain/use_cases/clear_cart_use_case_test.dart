@@ -1,5 +1,5 @@
 import 'package:fake_store/components/shopping_cart/domain/repositories/shopping_cart_repository.dart';
-import 'package:fake_store/components/shopping_cart/domain/use_cases/clear_cart_use_case.dart';
+import 'package:fake_store/components/shopping_cart/domain/use_cases/clear_cart/clear_cart_use_case.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
