@@ -1,10 +1,11 @@
+import 'package:fake_store/components/products/presentation/controllers/state/products_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:go_router/go_router.dart';
 import 'package:fake_store/ui/ui.dart';
 import '../../../categories/domain/models/category.dart';
-import '../providers/products_screen_provider.dart';
+import '../controllers/products_screen_controller.dart';
 import '../widgets/molecules/product_card.dart';
 
 class ProductsScreen extends ConsumerWidget {
@@ -14,8 +15,8 @@ class ProductsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(productsScreenProvider(category.name));
-    final notifier = ref.read(productsScreenProvider(category.name).notifier);
+    final state = ref.watch(productsScreenController(category.name));
+    final controller = ref.read(productsScreenController(category.name).notifier);
     final theme = Theme.of(context);
 
     return Scaffold(
@@ -68,7 +69,7 @@ class ProductsScreen extends ConsumerWidget {
                 ],
               ),
             ],
-            onChanged: (value) => notifier.updateSearchQuery(value),
+            onChanged: (value) => controller.updateSearchQuery(value),
           ),
 
           // Category Title

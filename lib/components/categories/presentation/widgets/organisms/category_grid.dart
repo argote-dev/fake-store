@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../data/providers/categories_provider.dart';
+import '../../controllers/categories_controller.dart';
 import '../molecules/molecules.dart';
 
 class CategoryGrid extends ConsumerWidget {
@@ -8,7 +8,7 @@ class CategoryGrid extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final categoriesAsync = ref.watch(categoriesListProvider);
+    final categoriesAsync = ref.watch(categoriesController);
 
     return categoriesAsync.when(
       data: (categories) => GridView.builder(
