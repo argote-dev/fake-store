@@ -23,6 +23,11 @@ class AppTheme {
       colorScheme: colorScheme,
       brightness: brightness,
       visualDensity: VisualDensity.adaptivePlatformDensity,
+      cardTheme: CardThemeData(
+        color: brightness == Brightness.light ? whiteColor : const Color(0xFF1E1E1E),
+        elevation: 2,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
+      ),
     );
   }
 }

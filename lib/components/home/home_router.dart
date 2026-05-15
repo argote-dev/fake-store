@@ -1,5 +1,5 @@
 import 'package:go_router/go_router.dart';
-import 'presentation/screens/home_screen.dart';
+import 'presentation/home_presentation.dart';
 
 final List<GoRoute> homeRoutes = [
   GoRoute(

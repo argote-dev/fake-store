@@ -11,18 +11,22 @@ class CategoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       clipBehavior: Clip.antiAlias,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
       child: InkWell(
         onTap: () => context.push('/products', extra: category),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Expanded(
-              child: Container(
-                color: Colors.grey[200],
-                child: const Icon(Icons.category, size: 50, color: Colors.grey),
-                // Placeholder for category image
-                // Image.network(category.imageUrl, fit: BoxFit.cover),
+              child: Image.asset(
+                category.image,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return const Icon(
+                    Icons.category,
+                    size: 50,
+                    color: Colors.grey,
+                  );
+                },
               ),
             ),
             Padding(

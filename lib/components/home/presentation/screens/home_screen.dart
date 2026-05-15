@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fake_store/common/l10n/app_localizations.dart';
-import '../../../../ui/widgets/atoms/section_title.dart';
-import '../../../../ui/widgets/molecules/search_top_bar.dart';
-import '../../../categories/presentation/widgets/organisms/category_grid.dart';
+import 'package:fake_store/ui/ui.dart';
+import '../../../categories/presentation/categories_presentation.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

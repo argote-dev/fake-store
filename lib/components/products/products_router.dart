@@ -1,5 +1,5 @@
 import 'package:go_router/go_router.dart';
-import 'presentation/screens/products_screen.dart';
+import 'presentation/products_presentation.dart';
 import '../categories/domain/models/category.dart';
 
 final List<GoRoute> productsRoutes = [

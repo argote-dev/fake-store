@@ -1,5 +1,4 @@
-import 'package:fake_store/ui/router/app_router.dart';
-import 'package:fake_store/ui/theme/app_theme.dart';
+import 'package:fake_store/ui/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

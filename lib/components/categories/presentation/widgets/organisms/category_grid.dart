@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../data/providers/categories_provider.dart';
-import '../molecules/category_card.dart';
+import '../molecules/molecules.dart';
 
 class CategoryGrid extends ConsumerWidget {
   const CategoryGrid({super.key});

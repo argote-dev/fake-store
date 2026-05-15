@@ -22,8 +22,8 @@ void main() {
 
   group('execute', () {
     final tCategories = [
-      Category(id: 1, name: 'Electronics'),
-      Category(id: 2, name: 'Wearables'),
+      Category(id: 1, name: 'Electronics', image: 'assets/images/electronics.jpg'),
+      Category(id: 2, name: 'Wearables', image: 'assets/images/wearable.jpg'),
     ];
 
     test('should return list of categories from repository', () async {
