@@ -1,3 +1,4 @@
+import 'package:fake_store/database/database_provider.dart';
 import 'package:fake_store/network/router/provider/network_provider.dart';
 import 'package:riverpod/riverpod.dart';
 import '../../domain/repositories/products_repository.dart';
@@ -14,7 +15,8 @@ final productsRemoteDataSourceProvider = Provider<ProductsRemoteDataSource>((ref
 });
 
 final productsLocalDataSourceProvider = Provider<ProductsLocalDataSource>((ref) {
-  return ProductsLocalDataSourceImpl();
+  final databaseService = ref.watch(databaseServiceProvider);
+  return ProductsLocalDataSourceImpl(databaseService: databaseService);
 });
 
 final productsRepositoryProvider = Provider<ProductsRepository>((ref) {

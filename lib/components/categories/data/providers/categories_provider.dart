@@ -1,3 +1,4 @@
+import 'package:fake_store/database/database_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/repositories/categories_repository.dart';
 import '../../domain/use_cases/get_categories/get_categories_use_case.dart';
@@ -7,7 +8,8 @@ import '../repositories/categories_repository_impl.dart';
 final categoriesLocalDataSourceProvider = Provider<CategoriesLocalDataSource>((
   ref,
 ) {
-  return CategoriesLocalDataSourceImpl();
+  final databaseService = ref.watch(databaseServiceProvider);
+  return CategoriesLocalDataSourceImpl(databaseService: databaseService);
 });
 
 final categoriesRepositoryProvider = Provider<CategoriesRepository>((ref) {

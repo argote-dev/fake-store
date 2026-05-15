@@ -1,39 +1,16 @@
 import 'package:sqflite/sqflite.dart';
-import 'package:path/path.dart';
+import '../../../../../database/database_service.dart';
 
 class ShoppingCartLocalDataSource {
-  static Database? _database;
   static const String tableName = 'cart_items';
+  final DatabaseService _databaseService;
+  final Database? _database;
 
-  Future<Database> get database async {
-    if (_database != null) return _database!;
-    _database = await _initDb();
-    return _database!;
-  }
+  ShoppingCartLocalDataSource({DatabaseService? databaseService, Database? database}) 
+      : _databaseService = databaseService ?? DatabaseService(),
+        _database = database;
 
-  Future<Database> _initDb() async {
-    final dbPath = await getDatabasesPath();
-    final path = join(dbPath, 'shopping_cart.db');
-
-    return await openDatabase(
-      path,
-      version: 1,
-      onCreate: (db, version) async {
-        await db.execute('''
-          CREATE TABLE $tableName (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            product_id INTEGER,
-            name TEXT,
-            image TEXT,
-            price REAL,
-            unit TEXT,
-            quantity INTEGER,
-            is_express INTEGER
-          )
-        ''');
-      },
-    );
-  }
+  Future<Database> get database async => _database ?? await _databaseService.database;
 
   Future<void> saveCartItem(Map<String, dynamic> item) async {
     final db = await database;

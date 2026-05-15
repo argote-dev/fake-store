@@ -1,3 +1,4 @@
+import 'package:fake_store/database/database_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/repositories/shopping_cart_repository.dart';
 import '../../domain/use_cases/add_product_to_cart_use_case.dart';
@@ -9,7 +10,8 @@ import '../datasources/local/shopping_cart_local_data_source.dart';
 import '../repositories/shopping_cart_repository_impl.dart';
 
 final shoppingCartLocalDataSourceProvider = Provider<ShoppingCartLocalDataSource>((ref) {
-  return ShoppingCartLocalDataSource();
+  final databaseService = ref.watch(databaseServiceProvider);
+  return ShoppingCartLocalDataSource(databaseService: databaseService);
 });
 
 final shoppingCartRepositoryProvider = Provider<ShoppingCartRepository>((ref) {

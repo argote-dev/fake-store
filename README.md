@@ -51,7 +51,15 @@ La aplicación utiliza un archivo `.env` para la configuración de la API.
   BASE_URL=https://fakestoreapi.com
   ```
 
-### 4. Generación de código (si aplica)
+### 4. Configuración de Base de Datos para Web
+Si planeas ejecutar la aplicación en el navegador, es necesario configurar los binarios requeridos por SQLite para Web:
+
+```bash
+dart run sqflite_common_ffi_web:setup
+```
+Este comando descargará `sqlite3.wasm` y generará `sqflite_sw.js` en la carpeta `web/`.
+
+### 5. Generación de código (si aplica)
 Si has realizado cambios en modelos o archivos que requieran generación de código:
 ```bash
 flutter pub run build_runner build --delete-conflicting-outputs
