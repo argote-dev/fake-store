@@ -6,6 +6,7 @@ class CurrencyFormatter {
       locale: 'es_CO',
       symbol: '\$',
       decimalDigits: 0,
+      customPattern: '¤ #,##0',
     );
     return formatter.format(value);
   }

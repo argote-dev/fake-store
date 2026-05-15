@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('CurrencyFormatter', () {
-    test('should format double value to COP currency string', () {
+    test('should format double value to COP currency string with space and dots', () {
       // Given
       const double value = 150000;
       
@@ -11,11 +11,18 @@ void main() {
       final result = CurrencyFormatter.formatCOP(value);
       
       // Then
-      // es_CO locale with NumberFormat.currency usually produces "$150.000" or similar
-      // Note: non-breaking space might be present depending on intl version/locale data
-      expect(result.contains('\$'), true);
-      expect(result.contains('150'), true);
-      expect(result.contains('000'), true);
+      expect(result, equals('\$ 150.000'));
+    });
+
+    test('should format 1000 correctly', () {
+      // Given
+      const double value = 1000;
+      
+      // When
+      final result = CurrencyFormatter.formatCOP(value);
+      
+      // Then
+      expect(result, equals('\$ 1.000'));
     });
 
     test('should format 0 correctly', () {
@@ -26,7 +33,7 @@ void main() {
       final result = CurrencyFormatter.formatCOP(value);
       
       // Then
-      expect(result.contains('0'), true);
+      expect(result, equals('\$ 0'));
     });
   });
 }
