@@ -3,7 +3,7 @@ import 'package:fake_store/components/products/data/models/entity/product_entity
 import 'package:fake_store/components/products/data/datasources/local/products_local_data_source.dart';
 import 'package:fake_store/components/products/data/datasources/remote/products_remote_data_source.dart';
 import 'package:fake_store/components/products/data/repositories/products_repository_impl.dart';
-import 'package:fake_store/network/model/result/result.dart';
+import 'package:fake_store/common/models/result.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';

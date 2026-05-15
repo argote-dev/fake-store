@@ -1,4 +1,4 @@
-import 'package:fake_store/network/model/result/result.dart';
+import 'package:fake_store/common/models/result.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

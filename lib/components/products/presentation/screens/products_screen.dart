@@ -1,4 +1,5 @@
 import 'package:fake_store/components/products/presentation/controllers/state/products_state.dart';
+import 'package:fake_store/ui/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:fake_store/common/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -21,10 +22,15 @@ class ProductsScreen extends ConsumerWidget {
     final state = ref.watch(productsScreenController(category.name));
     final controller = ref.read(productsScreenController(category.name).notifier);
     final isExpressMode = ref.watch(expressModeProvider);
-    final cartItems = ref.watch(shoppingCartProvider(isExpressMode));
+    
+    final cartAsync = ref.watch(shoppingCartProvider(isExpressMode));
+    final cartItems = cartAsync.value ?? [];
+    
     final theme = Theme.of(context);
 
-    final themeColor = isExpressMode ? const Color(0xFF2596be) : const Color(0xFFFFe800);
+    final themeColor = isExpressMode 
+        ? AppColors.expressModeBlue 
+        : AppColors.regularModeYellow;
     final foregroundColor = isExpressMode ? Colors.white : Colors.black;
 
     final totalItems = cartItems.fold(0, (sum, item) => sum + item.quantity);

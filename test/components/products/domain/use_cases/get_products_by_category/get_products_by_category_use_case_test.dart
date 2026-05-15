@@ -1,7 +1,7 @@
 import 'package:fake_store/components/products/domain/models/product.dart';
 import 'package:fake_store/components/products/domain/repositories/products_repository.dart';
 import 'package:fake_store/components/products/domain/use_cases/get_products_by_category/get_products_by_category_use_case.dart';
-import 'package:fake_store/network/model/result/result.dart';
+import 'package:fake_store/common/models/result.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';

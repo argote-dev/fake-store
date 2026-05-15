@@ -1,4 +1,4 @@
-import 'package:fake_store/network/model/result/result.dart';
+import 'package:fake_store/common/models/result.dart';
 import '../../domain/models/category.dart';
 import '../../domain/repositories/categories_repository.dart';
 import '../datasources/local/categories_local_data_source.dart';

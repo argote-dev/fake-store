@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:fake_store/network/model/http/http_method.dart';
 import 'package:fake_store/network/model/http/http_route.dart';
-import 'package:fake_store/network/model/result/result.dart';
+import 'package:fake_store/common/models/result.dart';
 import 'package:fake_store/network/path/path.dart';
 import 'package:fake_store/network/router/dio/dio_router.dart';
 import 'package:flutter_test/flutter_test.dart';

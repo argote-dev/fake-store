@@ -13,7 +13,7 @@ import 'package:fake_store/components/products/data/models/dto/product_response.
     as _i5;
 import 'package:fake_store/components/products/data/models/entity/product_entity.dart'
     as _i8;
-import 'package:fake_store/network/model/result/result.dart' as _i4;
+import 'package:fake_store/common/models/result.dart' as _i4;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i6;
 

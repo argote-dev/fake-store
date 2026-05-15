@@ -55,9 +55,9 @@ void main() {
 
       // Then
       final state = container.read(shoppingCartProvider(false));
-      expect(state.length, 1);
-      expect(state.first.productId, tProduct.productId);
-      expect(state.first.quantity, 1);
+      expect(state.value?.length, 1);
+      expect(state.value?.first.productId, tProduct.productId);
+      expect(state.value?.first.quantity, 1);
       verify(mockRepository.saveCartItem(any)).called(1);
     });
 
@@ -76,14 +76,14 @@ void main() {
       when(mockRepository.updateQuantity(any, any, any)).thenAnswer((_) async => {});
       
       final controller = container.read(shoppingCartProvider(false).notifier);
-      await Future.delayed(Duration.zero); // Let build finish
+      await container.read(shoppingCartProvider(false).future); // Wait for build
 
       // When
       await controller.addProduct(tProduct);
 
       // Then
       final state = container.read(shoppingCartProvider(false));
-      expect(state.first.quantity, 2);
+      expect(state.value?.first.quantity, 2);
       verify(mockRepository.updateQuantity(tProduct.productId, false, 2)).called(1);
     });
 
@@ -102,14 +102,14 @@ void main() {
       when(mockRepository.deleteCartItem(any, any)).thenAnswer((_) async => {});
       
       final controller = container.read(shoppingCartProvider(false).notifier);
-      await Future.delayed(Duration.zero); // Let build finish
+      await container.read(shoppingCartProvider(false).future); // Wait for build
 
       // When
       await controller.updateQuantity(tProduct.productId, 0);
 
       // Then
       final state = container.read(shoppingCartProvider(false));
-      expect(state.isEmpty, true);
+      expect(state.value?.isEmpty, true);
       verify(mockRepository.deleteCartItem(tProduct.productId, false)).called(1);
     });
 
@@ -128,14 +128,14 @@ void main() {
       when(mockRepository.clearCart(false)).thenAnswer((_) async => {});
       
       final controller = container.read(shoppingCartProvider(false).notifier);
-      await Future.delayed(Duration.zero); // Let build finish
+      await container.read(shoppingCartProvider(false).future); // Wait for build
 
       // When
       await controller.clearCart();
 
       // Then
       final state = container.read(shoppingCartProvider(false));
-      expect(state.isEmpty, true);
+      expect(state.value?.isEmpty, true);
       verify(mockRepository.clearCart(false)).called(1);
     });
   });
@@ -153,8 +153,8 @@ void main() {
 
       // Then
       final state = container.read(shoppingCartProvider(true));
-      expect(state.length, 1);
-      expect(state.first.isExpress, true);
+      expect(state.value?.length, 1);
+      expect(state.value?.first.isExpress, true);
       verify(mockRepository.saveCartItem(argThat(predicate((CartItem item) => item.isExpress)))).called(1);
     });
   });

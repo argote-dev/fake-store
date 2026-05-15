@@ -1,33 +1,29 @@
+import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/models/cart_item.dart';
 import '../../data/providers/shopping_cart_provider.dart';
 import '../../../products/domain/models/product.dart';
 
-class ShoppingCartController extends Notifier<List<CartItem>> {
+class ShoppingCartController extends AsyncNotifier<List<CartItem>> {
   final bool isExpress;
 
   ShoppingCartController(this.isExpress);
 
   @override
-  List<CartItem> build() {
-    _loadCart();
-    return [];
-  }
-
-  Future<void> _loadCart() async {
-    final items = await ref.read(getCartUseCaseProvider).execute(isExpress);
-    state = items;
+  FutureOr<List<CartItem>> build() async {
+    return ref.read(getCartUseCaseProvider).execute(isExpress);
   }
 
   Future<void> addProduct(Product product) async {
-    final existingIndex = state.indexWhere(
+    final currentItems = state.value ?? [];
+    final existingIndex = currentItems.indexWhere(
       (item) => item.productId == product.productId,
     );
 
     if (existingIndex != -1) {
       await updateQuantity(
         product.productId,
-        state[existingIndex].quantity + 1,
+        currentItems[existingIndex].quantity + 1,
       );
     } else {
       final newItem = CartItem(
@@ -39,41 +35,58 @@ class ShoppingCartController extends Notifier<List<CartItem>> {
         quantity: 1,
         isExpress: isExpress,
       );
-      await ref.read(addProductToCartUseCaseProvider).execute(newItem);
-      state = [...state, newItem];
+      
+      state = const AsyncValue.loading();
+      state = await AsyncValue.guard(() async {
+        await ref.read(addProductToCartUseCaseProvider).execute(newItem);
+        return [...currentItems, newItem];
+      });
     }
   }
 
   Future<void> updateQuantity(int productId, int quantity) async {
-    await ref
-        .read(updateCartItemQuantityUseCaseProvider)
-        .execute(productId, isExpress, quantity);
+    final currentItems = state.value ?? [];
+    
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() async {
+      await ref
+          .read(updateCartItemQuantityUseCaseProvider)
+          .execute(productId, isExpress, quantity);
 
-    if (quantity <= 0) {
-      state = state.where((item) => item.productId != productId).toList();
-    } else {
-      state = [
-        for (final item in state)
-          if (item.productId == productId)
-            item.copyWith(quantity: quantity)
-          else
-            item,
-      ];
-    }
+      if (quantity <= 0) {
+        return currentItems.where((item) => item.productId != productId).toList();
+      } else {
+        return [
+          for (final item in currentItems)
+            if (item.productId == productId)
+              item.copyWith(quantity: quantity)
+            else
+              item,
+        ];
+      }
+    });
   }
 
   Future<void> removeProduct(int productId) async {
-    await ref.read(removeCartItemUseCaseProvider).execute(productId, isExpress);
-    state = state.where((item) => item.productId != productId).toList();
+    final currentItems = state.value ?? [];
+    
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() async {
+      await ref.read(removeCartItemUseCaseProvider).execute(productId, isExpress);
+      return currentItems.where((item) => item.productId != productId).toList();
+    });
   }
 
   Future<void> clearCart() async {
-    await ref.read(clearCartUseCaseProvider).execute(isExpress);
-    state = [];
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() async {
+      await ref.read(clearCartUseCaseProvider).execute(isExpress);
+      return [];
+    });
   }
 }
 
 final shoppingCartProvider =
-    NotifierProvider.family<ShoppingCartController, List<CartItem>, bool>(
+    AsyncNotifierProvider.family<ShoppingCartController, List<CartItem>, bool>(
       ShoppingCartController.new,
     );

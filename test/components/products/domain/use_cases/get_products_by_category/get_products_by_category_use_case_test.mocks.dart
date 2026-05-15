@@ -9,7 +9,7 @@ import 'package:fake_store/components/products/domain/models/product.dart'
     as _i5;
 import 'package:fake_store/components/products/domain/repositories/products_repository.dart'
     as _i2;
-import 'package:fake_store/network/model/result/result.dart' as _i4;
+import 'package:fake_store/common/models/result.dart' as _i4;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i6;
 

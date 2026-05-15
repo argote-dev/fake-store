@@ -1,4 +1,4 @@
-import 'package:fake_store/network/model/result/result.dart';
+import 'package:fake_store/common/models/result.dart';
 import '../../domain/models/product.dart';
 import '../../domain/repositories/products_repository.dart';
 import '../mappers/product_mapper.dart';
