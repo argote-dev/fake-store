@@ -4,6 +4,8 @@ import '../../models/entity/product_entity.dart';
 
 abstract class ProductsLocalDataSource {
   Future<List<ProductEntity>> getProducts();
+  Future<List<ProductEntity>> getProductsByCategory(String category, int limit, int offset);
+  Future<List<ProductEntity>> searchProducts(String query, int limit, int offset);
   Future<void> saveProducts(List<ProductEntity> products);
   Future<void> clearProducts();
 }
@@ -79,6 +81,36 @@ class ProductsLocalDataSourceImpl implements ProductsLocalDataSource {
   Future<List<ProductEntity>> getProducts() async {
     final db = await database;
     final List<Map<String, dynamic>> maps = await db.query(_tableName);
+    return List.generate(maps.length, (i) {
+      return ProductEntity.fromMap(maps[i]);
+    });
+  }
+
+  @override
+  Future<List<ProductEntity>> getProductsByCategory(String category, int limit, int offset) async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query(
+      _tableName,
+      where: 'category = ?',
+      whereArgs: [category],
+      limit: limit,
+      offset: offset,
+    );
+    return List.generate(maps.length, (i) {
+      return ProductEntity.fromMap(maps[i]);
+    });
+  }
+
+  @override
+  Future<List<ProductEntity>> searchProducts(String query, int limit, int offset) async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query(
+      _tableName,
+      where: 'name LIKE ?',
+      whereArgs: ['%$query%'],
+      limit: limit,
+      offset: offset,
+    );
     return List.generate(maps.length, (i) {
       return ProductEntity.fromMap(maps[i]);
     });

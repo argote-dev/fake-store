@@ -1,6 +1,4 @@
 import 'package:fake_store/components/products/data/datasources/remote/products_remote_data_source.dart';
-import 'package:fake_store/components/products/data/models/dto/product_response.dart';
-import 'package:fake_store/network/model/http/http_route.dart';
 import 'package:fake_store/network/model/result/result.dart';
 import 'package:fake_store/network/router/network_router.dart';
 import 'package:flutter_test/flutter_test.dart';

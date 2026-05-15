@@ -97,4 +97,88 @@ void main() {
       verifyNever(mockLocalDataSource.saveProducts(any));
     });
   });
+
+  group('getProductsByCategory', () {
+    const tCategory = 'Electronics';
+    const tLimit = 10;
+    const tOffset = 0;
+    final tProductEntity = ProductEntity(
+      productId: 1,
+      name: 'Test',
+      description: 'Desc',
+      price: 10.0,
+      unit: 'Piece',
+      image: 'img',
+      discount: 0,
+      availability: true,
+      brand: 'Brand',
+      category: tCategory,
+      rating: 4.5,
+    );
+    final tProductResponse = ProductResponse(
+      productId: 1,
+      name: 'Test',
+      description: 'Desc',
+      price: 10.0,
+      unit: 'Piece',
+      image: 'img',
+      discount: 0,
+      availability: true,
+      brand: 'Brand',
+      category: tCategory,
+      rating: 4.5,
+    );
+
+    test('should return local data when available', () async {
+      // Given
+      when(mockLocalDataSource.getProductsByCategory(tCategory, tLimit, tOffset))
+          .thenAnswer((_) async => [tProductEntity]);
+
+      // When
+      final result = await repository.getProductsByCategory(tCategory, tLimit, tOffset);
+
+      // Then
+      expect(result.isSuccess, true);
+      verify(mockLocalDataSource.getProductsByCategory(tCategory, tLimit, tOffset));
+      verifyZeroInteractions(mockRemoteDataSource);
+    });
+
+    test('should fetch all remote, cache, and re-query local when local is empty and offset 0', () async {
+      // Given
+      when(mockLocalDataSource.getProductsByCategory(tCategory, tLimit, tOffset))
+          .thenAnswer((_) async => []); // First call
+      
+      when(mockRemoteDataSource.getProducts())
+          .thenAnswer((_) async => Result.success([tProductResponse]));
+      when(mockLocalDataSource.saveProducts(any)).thenAnswer((_) async => {});
+      
+      // We need to re-stub to return data for the second call
+      // or use a smarter way. Mockito.when(..).thenAnswer(..).thenAnswer(..)
+      when(mockLocalDataSource.getProductsByCategory(tCategory, tLimit, tOffset))
+          .thenAnswer((_) async => []); // Reset for safety
+          
+      // Actually, let's use a counter or just re-stub before the second call happens.
+      // But they are both in the same 'repository.getProductsByCategory' call.
+      
+      // Let's use chained thenAnswer if supported or just return based on a flag.
+      var callCount = 0;
+      when(mockLocalDataSource.getProductsByCategory(tCategory, tLimit, tOffset))
+          .thenAnswer((_) async {
+            if (callCount == 0) {
+              callCount++;
+              return [];
+            }
+            return [tProductEntity];
+          });
+
+      // When
+      final result = await repository.getProductsByCategory(tCategory, tLimit, tOffset);
+
+      // Then
+      expect(result.isSuccess, true);
+      verify(mockLocalDataSource.getProductsByCategory(tCategory, tLimit, tOffset)).called(2);
+      verify(mockRemoteDataSource.getProducts());
+      verify(mockLocalDataSource.saveProducts(any));
+    });
+  });
 }

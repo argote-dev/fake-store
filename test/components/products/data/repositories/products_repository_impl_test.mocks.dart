@@ -76,6 +76,38 @@ class MockProductsLocalDataSource extends _i1.Mock
           as _i3.Future<List<_i8.ProductEntity>>);
 
   @override
+  _i3.Future<List<_i8.ProductEntity>> getProductsByCategory(
+    String? category,
+    int? limit,
+    int? offset,
+  ) =>
+      (super.noSuchMethod(
+            Invocation.method(#getProductsByCategory, [
+              category,
+              limit,
+              offset,
+            ]),
+            returnValue: _i3.Future<List<_i8.ProductEntity>>.value(
+              <_i8.ProductEntity>[],
+            ),
+          )
+          as _i3.Future<List<_i8.ProductEntity>>);
+
+  @override
+  _i3.Future<List<_i8.ProductEntity>> searchProducts(
+    String? query,
+    int? limit,
+    int? offset,
+  ) =>
+      (super.noSuchMethod(
+            Invocation.method(#searchProducts, [query, limit, offset]),
+            returnValue: _i3.Future<List<_i8.ProductEntity>>.value(
+              <_i8.ProductEntity>[],
+            ),
+          )
+          as _i3.Future<List<_i8.ProductEntity>>);
+
+  @override
   _i3.Future<void> saveProducts(List<_i8.ProductEntity>? products) =>
       (super.noSuchMethod(
             Invocation.method(#saveProducts, [products]),
