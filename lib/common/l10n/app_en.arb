@@ -1,0 +1,17 @@
+{
+  "categoriesTitle": "Categories",
+  "@categoriesTitle": {
+    "description": "Title for the categories section on the home screen"
+  },
+  "searchHint": "Search in your app",
+  "expressModeLabel": "Activate express experience",
+  "cartTitleExpress": "Express Cart",
+  "cartTitleStandard": "My Cart",
+  "emptyCartMessage": "Your cart is empty",
+  "totalLabel": "Total:",
+  "checkoutButton": "CHECKOUT",
+  "addButton": "Add",
+  "buyButton": "Buy",
+  "unitsLabel": "units",
+  "searchPlaceholder": "What are you looking for?"
+}
