@@ -1,3 +1,4 @@
+import 'package:fake_store/ui/router/app_router.dart';
 import 'package:fake_store/ui/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
@@ -10,10 +11,10 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
+      routerConfig: appRouter,
       theme: AppTheme().getTheme(),
       debugShowCheckedModeBanner: false,
-      home: Scaffold(body: Center(child: Text('Hello World!'))),
     );
   }
 }
