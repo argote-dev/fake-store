@@ -110,6 +110,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Search in your app'**
   String get searchHint;
+
+  /// No description provided for @expressModeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Activate express experience'**
+  String get expressModeLabel;
+
+  /// No description provided for @cartTitleExpress.
+  ///
+  /// In en, this message translates to:
+  /// **'Express Cart'**
+  String get cartTitleExpress;
+
+  /// No description provided for @cartTitleStandard.
+  ///
+  /// In en, this message translates to:
+  /// **'My Cart'**
+  String get cartTitleStandard;
+
+  /// No description provided for @emptyCartMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Your cart is empty'**
+  String get emptyCartMessage;
+
+  /// No description provided for @totalLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Total:'**
+  String get totalLabel;
+
+  /// No description provided for @checkoutButton.
+  ///
+  /// In en, this message translates to:
+  /// **'CHECKOUT'**
+  String get checkoutButton;
+
+  /// No description provided for @addButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get addButton;
+
+  /// No description provided for @buyButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Buy'**
+  String get buyButton;
+
+  /// No description provided for @unitsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'units'**
+  String get unitsLabel;
+
+  /// No description provided for @searchPlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'What are you looking for?'**
+  String get searchPlaceholder;
 }
 
 class _AppLocalizationsDelegate

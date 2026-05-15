@@ -1,19 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:fake_store/common/l10n/app_localizations.dart';
 import 'package:fake_store/ui/ui.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../categories/presentation/categories_presentation.dart';
+import 'package:fake_store/components/shopping_cart/presentation/controllers/express_mode_controller.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
+    final isExpressMode = ref.watch(expressModeProvider);
+    final controller = ref.read(expressModeProvider.notifier);
+
+    final themeColor = isExpressMode
+        ? const Color(0xFF2596be)
+        : const Color(0xFFFFe800);
 
     return Scaffold(
       body: Column(
         children: [
-          const SearchTopBar(),
+          SearchTopBar(backgroundColor: themeColor),
+          if (controller.shouldShowSwitcher)
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16.0,
+                vertical: 8.0,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    l10n.expressModeLabel,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  Switch(
+                    value: isExpressMode,
+                    onChanged: (value) => controller.toggle(value),
+                    activeThumbColor: const Color(0xFF2596be),
+                    activeTrackColor: const Color(0xFF2596be).withAlpha(128),
+                  ),
+                ],
+              ),
+            ),
           Expanded(
             child: SingleChildScrollView(
               child: SafeArea(

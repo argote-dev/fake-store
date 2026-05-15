@@ -6,6 +6,8 @@ class SearchTopBar extends StatelessWidget {
   final Widget? leading;
   final List<Widget>? actions;
   final ValueChanged<String>? onChanged;
+  final Color? backgroundColor;
+  final Color? foregroundColor;
 
   const SearchTopBar({
     super.key,
@@ -13,15 +15,18 @@ class SearchTopBar extends StatelessWidget {
     this.leading,
     this.actions,
     this.onChanged,
+    this.backgroundColor,
+    this.foregroundColor,
   });
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
+    final bgColor = backgroundColor ?? theme.primaryColor;
 
     return Container(
-      color: theme.primaryColor,
+      color: bgColor,
       padding: EdgeInsets.only(
         left: 12.0,
         right: 12.0,

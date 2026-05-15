@@ -13,6 +13,36 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get searchHint => 'Busca en tu app';
+
+  @override
+  String get expressModeLabel => 'Activar la experiencia express';
+
+  @override
+  String get cartTitleExpress => 'Carrito Express';
+
+  @override
+  String get cartTitleStandard => 'Mi Carrito';
+
+  @override
+  String get emptyCartMessage => 'Tu carrito está vacío';
+
+  @override
+  String get totalLabel => 'Total:';
+
+  @override
+  String get checkoutButton => 'FINALIZAR COMPRA';
+
+  @override
+  String get addButton => 'Agregar';
+
+  @override
+  String get buyButton => 'Comprar';
+
+  @override
+  String get unitsLabel => 'und';
+
+  @override
+  String get searchPlaceholder => '¿Qué buscas?';
 }
 
 /// The translations for Spanish Castilian, as used in Latin America and the Caribbean (`es_419`).
@@ -24,4 +54,34 @@ class AppLocalizationsEs419 extends AppLocalizationsEs {
 
   @override
   String get searchHint => 'Busca en tu app';
+
+  @override
+  String get expressModeLabel => 'Activar la experiencia express';
+
+  @override
+  String get cartTitleExpress => 'Carrito Express';
+
+  @override
+  String get cartTitleStandard => 'Mi Carrito';
+
+  @override
+  String get emptyCartMessage => 'Tu carrito está vacío';
+
+  @override
+  String get totalLabel => 'Total:';
+
+  @override
+  String get checkoutButton => 'FINALIZAR COMPRA';
+
+  @override
+  String get addButton => 'Agregar';
+
+  @override
+  String get buyButton => 'Comprar';
+
+  @override
+  String get unitsLabel => 'und';
+
+  @override
+  String get searchPlaceholder => '¿Qué buscas?';
 }

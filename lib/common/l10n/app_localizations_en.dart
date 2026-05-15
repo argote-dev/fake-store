@@ -13,4 +13,34 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get searchHint => 'Search in your app';
+
+  @override
+  String get expressModeLabel => 'Activate express experience';
+
+  @override
+  String get cartTitleExpress => 'Express Cart';
+
+  @override
+  String get cartTitleStandard => 'My Cart';
+
+  @override
+  String get emptyCartMessage => 'Your cart is empty';
+
+  @override
+  String get totalLabel => 'Total:';
+
+  @override
+  String get checkoutButton => 'CHECKOUT';
+
+  @override
+  String get addButton => 'Add';
+
+  @override
+  String get buyButton => 'Buy';
+
+  @override
+  String get unitsLabel => 'units';
+
+  @override
+  String get searchPlaceholder => 'What are you looking for?';
 }

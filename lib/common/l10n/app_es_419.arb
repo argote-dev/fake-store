@@ -3,5 +3,15 @@
   "@categoriesTitle": {
     "description": "Título para la sección de categorías en la pantalla de inicio"
   },
-  "searchHint": "Busca en tu app"
+  "searchHint": "Busca en tu app",
+  "expressModeLabel": "Activar la experiencia express",
+  "cartTitleExpress": "Carrito Express",
+  "cartTitleStandard": "Mi Carrito",
+  "emptyCartMessage": "Tu carrito está vacío",
+  "totalLabel": "Total:",
+  "checkoutButton": "FINALIZAR COMPRA",
+  "addButton": "Agregar",
+  "buyButton": "Comprar",
+  "unitsLabel": "und",
+  "searchPlaceholder": "¿Qué buscas?"
 }

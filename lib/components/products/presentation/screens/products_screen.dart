@@ -1,10 +1,12 @@
 import 'package:fake_store/components/products/presentation/controllers/state/products_state.dart';
 import 'package:flutter/material.dart';
+import 'package:fake_store/common/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:go_router/go_router.dart';
 import 'package:fake_store/ui/ui.dart';
 import '../../../categories/domain/models/category.dart';
+import '../../../shopping_cart/presentation/shopping_cart_presentation.dart';
 import '../controllers/products_screen_controller.dart';
 import '../widgets/molecules/product_card.dart';
 
@@ -15,9 +17,17 @@ class ProductsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(productsScreenController(category.name));
     final controller = ref.read(productsScreenController(category.name).notifier);
+    final isExpressMode = ref.watch(expressModeProvider);
+    final cartItems = ref.watch(shoppingCartProvider(isExpressMode));
     final theme = Theme.of(context);
+
+    final themeColor = isExpressMode ? const Color(0xFF2596be) : const Color(0xFFFFe800);
+    final foregroundColor = isExpressMode ? Colors.white : Colors.black;
+
+    final totalItems = cartItems.fold(0, (sum, item) => sum + item.quantity);
 
     return Scaffold(
       body: Column(
@@ -25,9 +35,10 @@ class ProductsScreen extends ConsumerWidget {
         children: [
           // Custom Top Bar
           SearchTopBar(
-            hintText: '¿Qué buscas?',
+            hintText: l10n.searchPlaceholder,
+            backgroundColor: themeColor,
             leading: IconButton(
-              icon: Icon(Icons.arrow_back, color: theme.colorScheme.onPrimary),
+              icon: Icon(Icons.arrow_back, color: foregroundColor),
               onPressed: () => context.pop(),
             ),
             actions: [
@@ -36,36 +47,35 @@ class ProductsScreen extends ConsumerWidget {
                   IconButton(
                     icon: Icon(
                       Icons.shopping_cart,
-                      color: theme.colorScheme.onPrimary,
+                      color: foregroundColor,
                     ),
-                    onPressed: () {
-                      // Action for cart
-                    },
+                    onPressed: () => context.push('/cart'),
                   ),
-                  Positioned(
-                    right: 8,
-                    top: 8,
-                    child: Container(
-                      padding: const EdgeInsets.all(2),
-                      decoration: const BoxDecoration(
-                        color: Colors.red,
-                        shape: BoxShape.circle,
-                      ),
-                      constraints: const BoxConstraints(
-                        minWidth: 16,
-                        minHeight: 16,
-                      ),
-                      child: const Text(
-                        '0',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 10,
-                          fontWeight: FontWeight.bold,
+                  if (totalItems > 0)
+                    Positioned(
+                      right: 8,
+                      top: 8,
+                      child: Container(
+                        padding: const EdgeInsets.all(2),
+                        decoration: const BoxDecoration(
+                          color: Colors.red,
+                          shape: BoxShape.circle,
                         ),
-                        textAlign: TextAlign.center,
+                        constraints: const BoxConstraints(
+                          minWidth: 16,
+                          minHeight: 16,
+                        ),
+                        child: Text(
+                          '$totalItems',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                     ),
-                  ),
                 ],
               ),
             ],
@@ -113,9 +123,6 @@ class ProductsScreen extends ConsumerWidget {
         final product = state.filteredProducts[index];
         return ProductCard(
           product: product,
-          onAddPressed: () {
-            // Action to add product
-          },
         );
       },
     );
