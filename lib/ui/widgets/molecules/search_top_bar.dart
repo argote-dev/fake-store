@@ -1,7 +1,9 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import '../../../common/l10n/app_localizations.dart';
+import '../../../common/utils/debouncer.dart';
 
-class SearchTopBar extends StatelessWidget {
+class SearchTopBar extends StatefulWidget {
   final String? hintText;
   final Widget? leading;
   final List<Widget>? actions;
@@ -20,10 +22,29 @@ class SearchTopBar extends StatelessWidget {
   });
 
   @override
+  State<SearchTopBar> createState() => _SearchTopBarState();
+}
+
+class _SearchTopBarState extends State<SearchTopBar> {
+  late final Debouncer _debouncer;
+
+  @override
+  void initState() {
+    super.initState();
+    _debouncer = Debouncer(milliseconds: 300);
+  }
+
+  @override
+  void dispose() {
+    _debouncer.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
-    final bgColor = backgroundColor ?? theme.primaryColor;
+    final bgColor = widget.backgroundColor ?? theme.primaryColor;
 
     return Container(
       color: bgColor,
@@ -35,16 +56,20 @@ class SearchTopBar extends StatelessWidget {
       ),
       child: Row(
         children: [
-          if (leading != null) ...[
-            leading!,
+          if (widget.leading != null) ...[
+            widget.leading!,
             const SizedBox(width: 8),
           ],
           Expanded(
             child: TextField(
-              onChanged: onChanged,
+              onChanged: (value) {
+                _debouncer.run(() {
+                  widget.onChanged?.call(value);
+                });
+              },
               style: const TextStyle(color: Colors.black), // Text always black on white field
               decoration: InputDecoration(
-                hintText: hintText ?? l10n.searchHint,
+                hintText: widget.hintText ?? l10n.searchHint,
                 hintStyle: TextStyle(color: Colors.black.withValues(alpha: 0.5)),
                 prefixIcon: const Icon(Icons.search, size: 20, color: Colors.black),
                 isDense: true,
@@ -58,9 +83,9 @@ class SearchTopBar extends StatelessWidget {
               ),
             ),
           ),
-          if (actions != null && actions!.isNotEmpty) ...[
+          if (widget.actions != null && widget.actions!.isNotEmpty) ...[
             const SizedBox(width: 8),
-            ...actions!,
+            ...widget.actions!,
           ],
         ],
       ),
