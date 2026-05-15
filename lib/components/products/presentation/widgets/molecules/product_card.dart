@@ -87,6 +87,7 @@ class ProductCard extends ConsumerWidget {
     if (!isExpressMode) {
       if (!isInCart) {
         return ProductAddButton(
+          key: ValueKey('add_button_${product.productId}'),
           label: l10n.addButton,
           backgroundColor: AppColors.orange,
           foregroundColor: Colors.white,
@@ -94,6 +95,7 @@ class ProductCard extends ConsumerWidget {
         );
       }
       return ProductQuantityControl(
+        key: ValueKey('quantity_control_${product.productId}'),
         quantity: quantity,
         unitLabel: l10n.unitsLabel,
         onIncrement: () =>
@@ -101,7 +103,8 @@ class ProductCard extends ConsumerWidget {
         onDecrement: () =>
             cartController.updateQuantity(product.productId, quantity - 1),
       );
-    } else {
+    }
+ else {
       return Column(
         children: [
           ProductAddButton(

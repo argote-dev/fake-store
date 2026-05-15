@@ -87,10 +87,21 @@ Ejecutar todas las pruebas:
 flutter test
 ```
 
-Verificar cobertura (opcional):
+### Pruebas de Integración
+
+Las pruebas de integración verifican flujos completos de la aplicación en dispositivos o emuladores reales.
+
+Para ejecutar los tests de integración:
+
+1. Asegúrate de tener un dispositivo conectado o un emulador activo.
+2. Ejecuta el siguiente comando:
+   ```bash
+   flutter drive --driver=test_driver/integration_test.dart --target=integration_test/app_test.dart
+   ```
+
+Si estás en macOS y quieres probar la versión de escritorio:
 ```bash
-flutter test --coverage
-genhtml coverage/lcov.info -o coverage/html
+flutter drive --driver=test_driver/integration_test.dart --target=integration_test/app_test.dart -d macos
 ```
 
 ## Estructura del Proyecto

@@ -40,13 +40,17 @@ class HomeScreen extends ConsumerWidget {
             ),
           Expanded(
             child: SingleChildScrollView(
+              key: const ValueKey('home_scroll_view'),
               child: SafeArea(
                 top: false,
                 bottom: false,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SectionTitle(title: l10n.categoriesTitle),
+                    SectionTitle(
+                      key: const ValueKey('categories_section_title'),
+                      title: l10n.categoriesTitle,
+                    ),
                     const SizedBox(height: 12),
                     const CategoryGrid(),
                   ],

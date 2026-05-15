@@ -36,6 +36,7 @@ class ProductQuantityControl extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           IconButton(
+            key: const ValueKey('quantity_decrement_button'),
             onPressed: onDecrement,
             icon: Icon(minusIcon, size: 18, color: minusColor),
             padding: EdgeInsets.zero,
@@ -43,6 +44,7 @@ class ProductQuantityControl extends StatelessWidget {
           ),
           Text(
             '$quantity $unitLabel',
+            key: const ValueKey('quantity_text'),
             style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 12,
@@ -50,6 +52,7 @@ class ProductQuantityControl extends StatelessWidget {
             ),
           ),
           IconButton(
+            key: const ValueKey('quantity_increment_button'),
             onPressed: onIncrement,
             icon: Icon(Icons.add_circle_outline, size: 18, color: plusColor),
             padding: EdgeInsets.zero,
