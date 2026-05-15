@@ -2,7 +2,18 @@ import 'package:flutter/material.dart';
 import '../../../common/l10n/app_localizations.dart';
 
 class SearchTopBar extends StatelessWidget {
-  const SearchTopBar({super.key});
+  final String? hintText;
+  final Widget? leading;
+  final List<Widget>? actions;
+  final ValueChanged<String>? onChanged;
+
+  const SearchTopBar({
+    super.key,
+    this.hintText,
+    this.leading,
+    this.actions,
+    this.onChanged,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -12,24 +23,41 @@ class SearchTopBar extends StatelessWidget {
     return Container(
       color: theme.primaryColor,
       padding: EdgeInsets.only(
-        left: 16.0,
-        right: 16.0,
+        left: 12.0,
+        right: 12.0,
         bottom: 8.0,
         top: MediaQuery.of(context).padding.top + 8.0,
       ),
-      child: TextField(
-        decoration: InputDecoration(
-          hintText: l10n.searchHint,
-          prefixIcon: const Icon(Icons.search, size: 20),
-          isDense: true,
-          contentPadding: const EdgeInsets.symmetric(vertical: 10.0),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(30.0),
-            borderSide: BorderSide.none,
+      child: Row(
+        children: [
+          if (leading != null) ...[
+            leading!,
+            const SizedBox(width: 8),
+          ],
+          Expanded(
+            child: TextField(
+              onChanged: onChanged,
+              style: const TextStyle(color: Colors.black), // Text always black on white field
+              decoration: InputDecoration(
+                hintText: hintText ?? l10n.searchHint,
+                hintStyle: TextStyle(color: Colors.black.withValues(alpha: 0.5)),
+                prefixIcon: const Icon(Icons.search, size: 20, color: Colors.black),
+                isDense: true,
+                contentPadding: const EdgeInsets.symmetric(vertical: 10.0),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                  borderSide: BorderSide.none,
+                ),
+                filled: true,
+                fillColor: Colors.white,
+              ),
+            ),
           ),
-          filled: true,
-          fillColor: Colors.white,
-        ),
+          if (actions != null && actions!.isNotEmpty) ...[
+            const SizedBox(width: 8),
+            ...actions!,
+          ],
+        ],
       ),
     );
   }
