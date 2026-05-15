@@ -18,12 +18,11 @@ class ProductCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final theme = Theme.of(context);
     final isExpressMode = ref.watch(expressModeProvider);
-    
+
     final cartAsync = ref.watch(shoppingCartProvider(isExpressMode));
     final cartItems = cartAsync.value ?? [];
-    
+
     final cartController = ref.read(
       shoppingCartProvider(isExpressMode).notifier,
     );
@@ -97,14 +96,10 @@ class ProductCard extends ConsumerWidget {
       return ProductQuantityControl(
         quantity: quantity,
         unitLabel: l10n.unitsLabel,
-        onIncrement: () => cartController.updateQuantity(
-          product.productId,
-          quantity + 1,
-        ),
-        onDecrement: () => cartController.updateQuantity(
-          product.productId,
-          quantity - 1,
-        ),
+        onIncrement: () =>
+            cartController.updateQuantity(product.productId, quantity + 1),
+        onDecrement: () =>
+            cartController.updateQuantity(product.productId, quantity - 1),
       );
     } else {
       return Column(
@@ -127,10 +122,7 @@ class ProductCard extends ConsumerWidget {
             onIncrement: () => cartController.addProduct(product),
             onDecrement: () {
               if (isInCart) {
-                cartController.updateQuantity(
-                  product.productId,
-                  quantity - 1,
-                );
+                cartController.updateQuantity(product.productId, quantity - 1);
               }
             },
           ),
@@ -173,9 +165,9 @@ class _ProductTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       name,
-      style: Theme.of(context).textTheme.titleSmall?.copyWith(
-            fontWeight: FontWeight.bold,
-          ),
+      style: Theme.of(
+        context,
+      ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
       maxLines: 2,
       overflow: TextOverflow.ellipsis,
     );
@@ -191,9 +183,9 @@ class _ProductUnit extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       unit,
-      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-            color: AppColors.grey,
-          ),
+      style: Theme.of(
+        context,
+      ).textTheme.bodySmall?.copyWith(color: AppColors.grey),
     );
   }
 }
@@ -208,9 +200,9 @@ class _ProductPrice extends StatelessWidget {
     return Text(
       CurrencyFormatter.formatCOP(price),
       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-            color: AppColors.darkRed,
-            fontWeight: FontWeight.bold,
-          ),
+        color: AppColors.darkRed,
+        fontWeight: FontWeight.bold,
+      ),
     );
   }
 }
