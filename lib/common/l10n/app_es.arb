@@ -1,0 +1,7 @@
+{
+  "categoriesTitle": "Categorías",
+  "@categoriesTitle": {
+    "description": "Título para la sección de categorías en la pantalla de inicio"
+  },
+  "searchHint": "Busca en tu app"
+}

@@ -10,6 +10,8 @@ class CategoriesLocalDataSourceImpl implements CategoriesLocalDataSource {
   static const _databaseName = "fake_store.db";
   static const _tableName = "categories";
 
+  static const _databaseVersion = 1;
+
   Database? _database;
 
   CategoriesLocalDataSourceImpl({Database? database}) : _database = database;
@@ -23,8 +25,54 @@ class CategoriesLocalDataSourceImpl implements CategoriesLocalDataSource {
   Future<Database> _initDatabase() async {
     final documentsDirectory = await getDatabasesPath();
     final path = join(documentsDirectory, _databaseName);
-    // Note: Database creation and seeding are handled in ProductsLocalDataSourceImpl
-    return await openDatabase(path);
+    return await openDatabase(
+      path,
+      version: _databaseVersion,
+      onCreate: _onCreate,
+    );
+  }
+
+  Future _onCreate(Database db, int version) async {
+    // Note: Creating both tables for consistency across data sources
+    await db.execute('''
+          CREATE TABLE IF NOT EXISTS products (
+            product_id INTEGER PRIMARY KEY,
+            name TEXT NOT NULL,
+            description TEXT NOT NULL,
+            price REAL NOT NULL,
+            unit TEXT NOT NULL,
+            image TEXT NOT NULL,
+            discount INTEGER NOT NULL,
+            availability INTEGER NOT NULL,
+            brand TEXT NOT NULL,
+            category TEXT NOT NULL,
+            rating REAL NOT NULL,
+            reviews_json TEXT
+          )
+          ''');
+
+    await db.execute('''
+          CREATE TABLE IF NOT EXISTS categories (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL UNIQUE
+          )
+          ''');
+
+    final categories = [
+      'Electronics',
+      'Wearables',
+      'Cameras',
+      'Gaming',
+      'Appliances'
+    ];
+
+    for (var category in categories) {
+      await db.insert(
+        'categories',
+        {'name': category},
+        conflictAlgorithm: ConflictAlgorithm.ignore,
+      );
+    }
   }
 
   @override
