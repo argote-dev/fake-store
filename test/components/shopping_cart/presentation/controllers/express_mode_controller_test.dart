@@ -8,10 +8,10 @@ void main() {
       // Given
       final container = ProviderContainer();
       addTearDown(container.dispose);
-      
+
       // When
       final state = container.read(expressModeProvider);
-      
+
       // Then
       expect(state, false);
     });
@@ -21,16 +21,16 @@ void main() {
       final container = ProviderContainer();
       addTearDown(container.dispose);
       final controller = container.read(expressModeProvider.notifier);
-      
+
       // When
       controller.toggle(true);
-      
+
       // Then
       expect(container.read(expressModeProvider), true);
-      
+
       // When
       controller.toggle(false);
-      
+
       // Then
       expect(container.read(expressModeProvider), false);
     });
@@ -40,12 +40,12 @@ void main() {
       final container = ProviderContainer();
       addTearDown(container.dispose);
       final controller = container.read(expressModeProvider.notifier);
-      
+
       // When
       final result = controller.shouldShowSwitcher;
-      
+
       // Then
-      expect(result is bool, true);
+      expect(result, true);
     });
   });
 }
