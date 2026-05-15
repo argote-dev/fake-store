@@ -50,6 +50,29 @@ class ProductsLocalDataSourceImpl implements ProductsLocalDataSource {
             reviews_json TEXT
           )
           ''');
+
+    await db.execute('''
+          CREATE TABLE categories (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL UNIQUE
+          )
+          ''');
+
+    final categories = [
+      'Electronics',
+      'Wearables',
+      'Cameras',
+      'Gaming',
+      'Appliances'
+    ];
+
+    for (var category in categories) {
+      await db.insert(
+        'categories',
+        {'name': category},
+        conflictAlgorithm: ConflictAlgorithm.ignore,
+      );
+    }
   }
 
   @override
