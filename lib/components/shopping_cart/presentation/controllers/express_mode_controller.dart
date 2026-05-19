@@ -1,3 +1,4 @@
+import 'package:clock/clock.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../common/config/app_config.dart';
 
@@ -12,7 +13,7 @@ class ExpressModeController extends Notifier<bool> {
   }
 
   bool get shouldShowSwitcher {
-    final now = DateTime.now();
+    final now = clock.now();
     return now.hour >= AppConfig.expressStartHour &&
         now.hour < AppConfig.expressEndHour;
   }

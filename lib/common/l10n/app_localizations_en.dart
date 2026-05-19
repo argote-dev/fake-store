@@ -43,4 +43,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get searchPlaceholder => 'What are you looking for?';
+
+  @override
+  String get dialogOk => 'OK';
+
+  @override
+  String get dialogCancel => 'Cancel';
+
+  @override
+  String get dialogConfirm => 'Confirm';
+
+  @override
+  String get dialogLoading => 'Loading...';
 }

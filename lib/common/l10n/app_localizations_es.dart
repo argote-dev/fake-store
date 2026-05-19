@@ -43,6 +43,18 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get searchPlaceholder => '¿Qué buscas?';
+
+  @override
+  String get dialogOk => 'Aceptar';
+
+  @override
+  String get dialogCancel => 'Cancelar';
+
+  @override
+  String get dialogConfirm => 'Confirmar';
+
+  @override
+  String get dialogLoading => 'Cargando...';
 }
 
 /// The translations for Spanish Castilian, as used in Latin America and the Caribbean (`es_419`).
@@ -84,4 +96,16 @@ class AppLocalizationsEs419 extends AppLocalizationsEs {
 
   @override
   String get searchPlaceholder => '¿Qué buscas?';
+
+  @override
+  String get dialogOk => 'Aceptar';
+
+  @override
+  String get dialogCancel => 'Cancelar';
+
+  @override
+  String get dialogConfirm => 'Confirmar';
+
+  @override
+  String get dialogLoading => 'Cargando...';
 }

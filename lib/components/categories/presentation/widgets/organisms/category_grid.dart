@@ -11,23 +11,35 @@ class CategoryGrid extends ConsumerWidget {
     final categoriesAsync = ref.watch(categoriesController);
 
     return categoriesAsync.when(
-      data: (categories) => GridView.builder(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
+      data: (categories) => SliverPadding(
         padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 16,
-          mainAxisSpacing: 12,
-          childAspectRatio: 0.8,
+        sliver: SliverGrid(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 16,
+            mainAxisSpacing: 12,
+            childAspectRatio: 0.8,
+          ),
+          delegate: SliverChildBuilderDelegate(
+            (context, index) {
+              return CategoryCard(category: categories[index]);
+            },
+            childCount: categories.length,
+          ),
         ),
-        itemCount: categories.length,
-        itemBuilder: (context, index) {
-          return CategoryCard(category: categories[index]);
-        },
       ),
-      loading: () => const Center(child: CircularProgressIndicator()),
-      error: (err, stack) => Center(child: Text('Error: $err')),
+      loading: () => const SliverToBoxAdapter(
+        child: Padding(
+          padding: EdgeInsets.all(32.0),
+          child: Center(child: CircularProgressIndicator()),
+        ),
+      ),
+      error: (err, stack) => SliverToBoxAdapter(
+        child: Padding(
+          padding: const EdgeInsets.all(32.0),
+          child: Center(child: Text('Error: $err')),
+        ),
+      ),
     );
   }
 }

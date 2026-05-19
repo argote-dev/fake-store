@@ -1,4 +1,5 @@
 import 'package:fake_store/ui/theme/app_colors.dart';
+import 'package:fake_store/ui/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:fake_store/common/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -141,49 +142,64 @@ class ShoppingCartScreen extends ConsumerWidget {
   }
 
   void _showCheckoutDialog(BuildContext context, ShoppingCartController controller, Color themeColor) {
-    showDialog(
-      context: context,
+    context.showCustomDialog(
       barrierDismissible: false,
-      builder: (BuildContext dialogContext) {
-        return StatefulBuilder(
-          builder: (context, setState) {
-            bool isProcessing = true;
+      content: _CheckoutDialog(controller: controller),
+    );
+  }
+}
 
-            Future.delayed(const Duration(seconds: 2), () {
-              if (context.mounted && isProcessing) {
-                setState(() {
-                  isProcessing = false;
-                });
+class _CheckoutDialog extends StatefulWidget {
+  final ShoppingCartController controller;
 
-                Future.delayed(const Duration(milliseconds: 1000), () {
-                  if (context.mounted) {
-                    Navigator.of(dialogContext).pop();
-                    controller.clearCart();
-                    context.go('/');
-                  }
-                });
-              }
-            });
+  const _CheckoutDialog({required this.controller});
 
-            return AlertDialog(
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  if (isProcessing) ...[
-                    const CircularProgressIndicator(),
-                    const SizedBox(height: 16),
-                    const Text('Procesando pago...'),
-                  ] else ...[
-                    const Icon(Icons.check_circle, color: Colors.green, size: 48),
-                    const SizedBox(height: 16),
-                    const Text('Pago realizado'),
-                  ],
-                ],
-              ),
-            );
-          },
-        );
-      },
+  @override
+  State<_CheckoutDialog> createState() => _CheckoutDialogState();
+}
+
+class _CheckoutDialogState extends State<_CheckoutDialog> {
+  bool _isProcessing = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _startCheckoutSequence();
+  }
+
+  void _startCheckoutSequence() {
+    Future.delayed(const Duration(seconds: 2), () {
+      if (mounted) {
+        setState(() {
+          _isProcessing = false;
+        });
+
+        Future.delayed(const Duration(milliseconds: 1000), () {
+          if (mounted) {
+            Navigator.of(context).pop();
+            widget.controller.clearCart();
+            context.go('/');
+          }
+        });
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        if (_isProcessing) ...[
+          const CircularProgressIndicator(),
+          const SizedBox(height: 16),
+          const Text('Procesando pago...'),
+        ] else ...[
+          const Icon(Icons.check_circle, color: Colors.green, size: 48),
+          const SizedBox(height: 16),
+          const Text('Pago realizado'),
+        ],
+      ],
     );
   }
 }
