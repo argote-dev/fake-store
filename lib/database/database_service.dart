@@ -1,6 +1,6 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
-import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 import 'package:path/path.dart';
@@ -11,11 +11,25 @@ class DatabaseService {
   DatabaseService._internal();
 
   Database? _database;
+  Completer<Database>? _dbCompleter;
 
   Future<Database> get database async {
     if (_database != null) return _database!;
-    _database = await _initDatabase();
-    return _database!;
+
+    if (_dbCompleter != null) {
+      return _dbCompleter!.future;
+    }
+
+    _dbCompleter = Completer<Database>();
+    try {
+      _database = await _initDatabase();
+      _dbCompleter!.complete(_database);
+      return _database!;
+    } catch (e) {
+      _dbCompleter!.completeError(e);
+      _dbCompleter = null; // Permitir reintento en caso de fallo
+      rethrow;
+    }
   }
 
   Future<Database> _initDatabase() async {

@@ -39,22 +39,26 @@ class HomeScreen extends ConsumerWidget {
               ),
             ),
           Expanded(
-            child: SingleChildScrollView(
-              key: const ValueKey('home_scroll_view'),
-              child: SafeArea(
-                top: false,
-                bottom: false,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SectionTitle(
-                      key: const ValueKey('categories_section_title'),
-                      title: l10n.categoriesTitle,
+            child: SafeArea(
+              top: false,
+              bottom: false,
+              child: CustomScrollView(
+                key: const ValueKey('home_scroll_view'),
+                slivers: [
+                  SliverToBoxAdapter(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SectionTitle(
+                          key: const ValueKey('categories_section_title'),
+                          title: l10n.categoriesTitle,
+                        ),
+                        const SizedBox(height: 12),
+                      ],
                     ),
-                    const SizedBox(height: 12),
-                    const CategoryGrid(),
-                  ],
-                ),
+                  ),
+                  const CategoryGrid(),
+                ],
               ),
             ),
           ),

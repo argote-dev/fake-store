@@ -145,45 +145,65 @@ class ShoppingCartScreen extends ConsumerWidget {
       context: context,
       barrierDismissible: false,
       builder: (BuildContext dialogContext) {
-        return StatefulBuilder(
-          builder: (context, setState) {
-            bool isProcessing = true;
-
-            Future.delayed(const Duration(seconds: 2), () {
-              if (context.mounted && isProcessing) {
-                setState(() {
-                  isProcessing = false;
-                });
-
-                Future.delayed(const Duration(milliseconds: 1000), () {
-                  if (context.mounted) {
-                    Navigator.of(dialogContext).pop();
-                    controller.clearCart();
-                    context.go('/');
-                  }
-                });
-              }
-            });
-
-            return AlertDialog(
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  if (isProcessing) ...[
-                    const CircularProgressIndicator(),
-                    const SizedBox(height: 16),
-                    const Text('Procesando pago...'),
-                  ] else ...[
-                    const Icon(Icons.check_circle, color: Colors.green, size: 48),
-                    const SizedBox(height: 16),
-                    const Text('Pago realizado'),
-                  ],
-                ],
-              ),
-            );
-          },
-        );
+        return _CheckoutDialog(controller: controller);
       },
+    );
+  }
+}
+
+class _CheckoutDialog extends StatefulWidget {
+  final ShoppingCartController controller;
+
+  const _CheckoutDialog({required this.controller});
+
+  @override
+  State<_CheckoutDialog> createState() => _CheckoutDialogState();
+}
+
+class _CheckoutDialogState extends State<_CheckoutDialog> {
+  bool _isProcessing = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _startCheckoutSequence();
+  }
+
+  void _startCheckoutSequence() {
+    Future.delayed(const Duration(seconds: 2), () {
+      if (mounted) {
+        setState(() {
+          _isProcessing = false;
+        });
+
+        Future.delayed(const Duration(milliseconds: 1000), () {
+          if (mounted) {
+            Navigator.of(context).pop();
+            widget.controller.clearCart();
+            context.go('/');
+          }
+        });
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (_isProcessing) ...[
+            const CircularProgressIndicator(),
+            const SizedBox(height: 16),
+            const Text('Procesando pago...'),
+          ] else ...[
+            const Icon(Icons.check_circle, color: Colors.green, size: 48),
+            const SizedBox(height: 16),
+            const Text('Pago realizado'),
+          ],
+        ],
+      ),
     );
   }
 }
