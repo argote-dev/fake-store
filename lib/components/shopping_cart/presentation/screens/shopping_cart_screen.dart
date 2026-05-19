@@ -1,4 +1,5 @@
 import 'package:fake_store/ui/theme/app_colors.dart';
+import 'package:fake_store/ui/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:fake_store/common/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -141,12 +142,9 @@ class ShoppingCartScreen extends ConsumerWidget {
   }
 
   void _showCheckoutDialog(BuildContext context, ShoppingCartController controller, Color themeColor) {
-    showDialog(
-      context: context,
+    context.showCustomDialog(
       barrierDismissible: false,
-      builder: (BuildContext dialogContext) {
-        return _CheckoutDialog(controller: controller);
-      },
+      content: _CheckoutDialog(controller: controller),
     );
   }
 }
@@ -189,21 +187,19 @@ class _CheckoutDialogState extends State<_CheckoutDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          if (_isProcessing) ...[
-            const CircularProgressIndicator(),
-            const SizedBox(height: 16),
-            const Text('Procesando pago...'),
-          ] else ...[
-            const Icon(Icons.check_circle, color: Colors.green, size: 48),
-            const SizedBox(height: 16),
-            const Text('Pago realizado'),
-          ],
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        if (_isProcessing) ...[
+          const CircularProgressIndicator(),
+          const SizedBox(height: 16),
+          const Text('Procesando pago...'),
+        ] else ...[
+          const Icon(Icons.check_circle, color: Colors.green, size: 48),
+          const SizedBox(height: 16),
+          const Text('Pago realizado'),
         ],
-      ),
+      ],
     );
   }
 }

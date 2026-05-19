@@ -13,5 +13,9 @@
   "addButton": "Add",
   "buyButton": "Buy",
   "unitsLabel": "units",
-  "searchPlaceholder": "What are you looking for?"
+  "searchPlaceholder": "What are you looking for?",
+  "dialogOk": "OK",
+  "dialogCancel": "Cancel",
+  "dialogConfirm": "Confirm",
+  "dialogLoading": "Loading..."
 }

@@ -170,6 +170,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'What are you looking for?'**
   String get searchPlaceholder;
+
+  /// No description provided for @dialogOk.
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get dialogOk;
+
+  /// No description provided for @dialogCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get dialogCancel;
+
+  /// No description provided for @dialogConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get dialogConfirm;
+
+  /// No description provided for @dialogLoading.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading...'**
+  String get dialogLoading;
 }
 
 class _AppLocalizationsDelegate

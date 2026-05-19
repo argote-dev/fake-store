@@ -13,5 +13,9 @@
   "addButton": "Agregar",
   "buyButton": "Comprar",
   "unitsLabel": "und",
-  "searchPlaceholder": "¿Qué buscas?"
+  "searchPlaceholder": "¿Qué buscas?",
+  "dialogOk": "Aceptar",
+  "dialogCancel": "Cancelar",
+  "dialogConfirm": "Confirmar",
+  "dialogLoading": "Cargando..."
 }
